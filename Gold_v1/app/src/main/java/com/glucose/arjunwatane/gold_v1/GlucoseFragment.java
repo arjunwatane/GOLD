@@ -1,7 +1,6 @@
 package com.glucose.arjunwatane.gold_v1;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -38,7 +37,6 @@ public class GlucoseFragment extends Fragment
         // Required empty public constructor
     }
 
-    //comment test 222
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
