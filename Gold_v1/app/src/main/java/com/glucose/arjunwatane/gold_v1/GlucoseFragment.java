@@ -36,8 +36,13 @@ public class GlucoseFragment extends Fragment
     public GlucoseFragment()
     {
         // Required empty public constructor
+<<<<<<< HEAD
     }//test
 
+=======
+    }
+    //comment test
+>>>>>>> master
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
