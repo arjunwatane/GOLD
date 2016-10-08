@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.glucose.arjunwatane.gold_v1.GlucoseFragment">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/inputGlucose"
+        android:layout_above="@+id/button_glucose"
+        android:layout_centerHorizontal="true"
+        android:text="enter" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Glucose"
+        android:padding="8dp"
+        android:layout_centerVertical = "true"
+        android:layout_centerHorizontal = "true"
+        android:id="@+id/button_glucose"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/outputGlucose"
+        android:layout_below="@+id/button_glucose"
+        android:layout_centerHorizontal="true"
+        android:text="result" />
+
+
+</RelativeLayout>
