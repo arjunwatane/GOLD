@@ -41,7 +41,11 @@ public class GlucoseFragment extends Fragment
 
 =======
     }
+<<<<<<< HEAD
     //comment test
+>>>>>>> master
+=======
+    //comment test 222
 >>>>>>> master
     /**
      * Use this factory method to create a new instance of
