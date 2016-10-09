@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +21,7 @@ public class GlucoseFragment extends Fragment
     Button b;
     EditText inputGlucose;
     TextView outputGlucose;
-    String nestring;
+    String stringGlucose;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,6 +68,7 @@ public class GlucoseFragment extends Fragment
         }
     }
 
+    //Arjun start: click glucose button to start pre-processing
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -80,15 +82,31 @@ public class GlucoseFragment extends Fragment
 
         View.OnClickListener listener = new View.OnClickListener()
         {
+            /*
+                Call the filter() method, which creates a new GlucoseFilter object (GlucoseFilter.java)
+                That should be where the calculations and algorithms are run for PRE-PROCESSING RAW SPECTRA
+             */
             @Override
             public void onClick(View v)
             {
-                stringGlucose = inputGlucose.getText().toString();
-                outputGlucose.setText(stringGlucose);
+                filter();
             }
         };
         b.setOnClickListener(listener);
         return rootView;
     }
 
+
+    public void filter()
+    {
+        GlucoseFilter test = new GlucoseFilter();
+        int result;
+        try {result = test.filterMain(Integer.parseInt(inputGlucose.getText().toString()));
+            outputGlucose.setText(Integer.toString(result));}
+        catch(NumberFormatException nfe){
+            outputGlucose.setText("NFE error");
+        }
+
+    }
+    //Arjun end:
 }
