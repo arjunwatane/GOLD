@@ -7,12 +7,12 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/inputGlucose"
         android:layout_above="@+id/button_glucose"
         android:layout_centerHorizontal="true"
-        android:text="enter" />
+        android:text="" />
 
 
     <Button
