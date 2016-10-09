@@ -20,6 +20,7 @@ public class GlucoseFragment extends Fragment
     Button b;
     EditText inputGlucose;
     TextView outputGlucose;
+    String nestring;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
