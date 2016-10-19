@@ -7,7 +7,7 @@ public class MovingAverage {
 
     MovingAverage(int[][] average){
         for(int i=0; i<average.length; i++){
-            for(int j=0; j<average.length-denominator; j++){
+            for(int j=0; j<average.length-denominator+1; j++){
                 int sum=0;
                 for(int k=0; k<denominator; k++) sum += average[i][k+j];
                 average[i][j] = movavg(sum);
@@ -17,8 +17,7 @@ public class MovingAverage {
     }
 
     //calculate average
-    int movavg(int sum){
-        return (sum/denominator);
+    int movavg(int sum){return (sum/denominator);
     }
 
     //return averaged matrix
@@ -26,3 +25,4 @@ public class MovingAverage {
         return avg;
     }
 }
+296709 297804 298901 300000
