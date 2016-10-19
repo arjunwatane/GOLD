@@ -17,12 +17,8 @@ import static junit.framework.Assert.assertEquals;
 
 public class GlucoseFilter
 {
-
-//test Justyn
-    
     public int filterMain(int spectrum)
     {
-
         double coef[] = new double[]{1,-2,3};
 
         double x[] = new double[]{-2,1,0.5,2,3,4,5,7,8,9.2,10.2,4.3,6.7};
@@ -39,6 +35,12 @@ public class GlucoseFilter
             y[i] = v;
         }
 
+        //generic derivative
+        Derive derive = new Derive();
+
+        //derived
+        int[][] result = derive.getData();
+
         PolynomialFit alg = new PolynomialFit(4);
 
         alg.fit(x,y);
@@ -49,8 +51,5 @@ public class GlucoseFilter
 
         Log.d("GlucoseFilter:", Arrays.toString(coef) + Arrays.toString(found));
         return spectrum;
-
-
     }
-
 }
