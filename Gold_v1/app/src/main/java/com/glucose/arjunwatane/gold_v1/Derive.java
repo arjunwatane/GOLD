@@ -38,6 +38,7 @@ public class Derive {
         return spectrum;//return derived spectrum
     }
 
+    //return derived matrix
     public int[][] getData(){
         return data;
     }
