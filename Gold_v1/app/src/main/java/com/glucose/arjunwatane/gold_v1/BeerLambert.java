@@ -3,31 +3,44 @@ package com.glucose.arjunwatane.gold_v1;
 public class BeerLambert {
     static final int rows=100, cols=500;
     //trans spectrum of component
-    int tcomp;
+    double tcomp;
     //trans spectrum of reference sample (component free) constant
-    int tref;
+    double tref;
     //concentration
-    int c;
+    double c;
     //path length
-    int l;
+    double l;
 
     //matrix to store input data
-    private int[][] data = new int[rows][cols];
+    private double[][] data = new double[rows][cols];
     int wave;
 
-    BeerLambert(int wavelength){
+    BeerLambert(int wavelength, double con, double len){
         wave = wavelength;
-
-        compute(int[][] input);
+        c = con;
+        l = len;
+        compute(double[][] input);
     }
 
-    public void compute(int[][] input){
-        //accept input into function
+    //must accept input matrix
+    //calibration beerlambert
+    public void compute(double[][] input){
+        //set tcomp--glucose
 
+        //work down the col
+        for(int i=0; i<rows; i++){
+            //work along the row
+            for(int j=0; j<cols; j++){
+                //absorbance of sample = -log_10(tcomp/tref) / (length * concentration)
+                input[i][j] = (-1.0) * Math.log10(tcomp/tref) / (l*c);
+            }
+        }
 
+        //return the computed absorbance
+        data = input;
     }
 
-    public int[][] getData() {
+    public double[][] getData() {
         return data;
     }
 }
