@@ -46,10 +46,11 @@ public class BeerLambert {
         return data;
     }
 
+    //can take in input matrix and then calculate a coefficient or a range of coefficients
     //caclulate the coefficient
     double getCoeff(){
         double d=0;//input value--coud be a matrix
-        coeff = l * getC(d) / data[0][0];
+        coeff = l * getC(d) / data[0][0];//data is placeholder for now
 
         return coeff;
     }

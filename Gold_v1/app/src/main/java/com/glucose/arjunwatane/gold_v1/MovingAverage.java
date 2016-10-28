@@ -1,11 +1,11 @@
 package com.glucose.arjunwatane.gold_v1;
 
 public class MovingAverage {
-    int[][] avg;
+    double[][] avg;
     //5 item moving window
-    static int denominator = 5;
+    static double denominator = 5.0;
 
-    MovingAverage(int[][] average){
+    MovingAverage(double[][] average){
         for(int i=0; i<average.length; i++){
             for(int j=0; j<average.length-denominator+1; j++){
                 int sum=0;
@@ -17,12 +17,11 @@ public class MovingAverage {
     }
 
     //calculate average
-    int movavg(int sum){return (sum/denominator);
+    double movavg(double sum){return (sum/denominator);
     }
 
     //return averaged matrix
-    int[][] getAvg(){
+    double[][] getAvg(){
         return avg;
     }
 }
-296709 297804 298901 300000
