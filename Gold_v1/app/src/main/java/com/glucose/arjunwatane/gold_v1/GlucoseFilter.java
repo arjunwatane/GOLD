@@ -13,7 +13,13 @@ import static junit.framework.Assert.assertEquals;
 
 public class GlucoseFilter
 {
+<<<<<<< HEAD
+
+
+    public int filterPolyFit(int spectrum)
+=======
     public int filterMain(int spectrum)
+>>>>>>> master
     {
         double coef[] = new double[]{1,-2,3};
 
@@ -44,6 +50,7 @@ public class GlucoseFilter
         result = av.getAvg();
 
         PolynomialFit alg = new PolynomialFit(4);
+        //PrincipleComponentAnalysis alg2 = new PrincipleComponentAnalysis();
 
         alg.fit(x,y);
 
