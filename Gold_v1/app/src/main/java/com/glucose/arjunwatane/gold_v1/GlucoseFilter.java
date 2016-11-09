@@ -35,7 +35,7 @@ public class GlucoseFilter
         Derive derive = new Derive();
 
         //derived
-        int[][] result = derive.getData();
+        double[][] result = derive.getData();
 
         //calculate moving average of derived data
         MovingAverage av = new MovingAverage(result);
