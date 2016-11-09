@@ -13,13 +13,11 @@ import static junit.framework.Assert.assertEquals;
 
 public class GlucoseFilter
 {
-<<<<<<< HEAD
+
 
 
     public int filterPolyFit(int spectrum)
-=======
-    public int filterMain(int spectrum)
->>>>>>> master
+
     {
         double coef[] = new double[]{1,-2,3};
 
