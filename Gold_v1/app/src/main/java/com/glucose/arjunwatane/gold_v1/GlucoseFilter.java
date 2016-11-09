@@ -19,7 +19,7 @@ public class GlucoseFilter
 {
 
 
-    public int filterMain(int spectrum)
+    public int filterPolyFit(int spectrum)
     {
 
         double coef[] = new double[]{1,-2,3};
@@ -39,6 +39,7 @@ public class GlucoseFilter
         }
 
         PolynomialFit alg = new PolynomialFit(4);
+        //PrincipleComponentAnalysis alg2 = new PrincipleComponentAnalysis();
 
         alg.fit(x,y);
 
