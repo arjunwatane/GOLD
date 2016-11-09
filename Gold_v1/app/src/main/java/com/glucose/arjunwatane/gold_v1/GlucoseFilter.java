@@ -11,17 +11,16 @@ import java.util.Arrays;
 import static android.R.attr.data;
 import static junit.framework.Assert.assertEquals;
 
-/**
- * Created by Arjun on 10/8/16.
- */
-
 public class GlucoseFilter
 {
+<<<<<<< HEAD
 
 
     public int filterPolyFit(int spectrum)
+=======
+    public int filterMain(int spectrum)
+>>>>>>> master
     {
-
         double coef[] = new double[]{1,-2,3};
 
         double x[] = new double[]{-2,1,0.5,2,3,4,5,7,8,9.2,10.2,4.3,6.7};
@@ -38,6 +37,18 @@ public class GlucoseFilter
             y[i] = v;
         }
 
+        //generic derivative
+        Derive derive = new Derive();
+
+        //derived
+        double[][] result = derive.getData();
+
+        //calculate moving average of derived data
+        MovingAverage av = new MovingAverage(result);
+
+        //drived and averaged
+        result = av.getAvg();
+
         PolynomialFit alg = new PolynomialFit(4);
         //PrincipleComponentAnalysis alg2 = new PrincipleComponentAnalysis();
 
@@ -49,8 +60,5 @@ public class GlucoseFilter
 
         Log.d("GlucoseFilter:", Arrays.toString(coef) + Arrays.toString(found));
         return spectrum;
-
-
     }
-
 }
