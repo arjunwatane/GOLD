@@ -101,9 +101,11 @@ public class GlucoseFragment extends Fragment
     {
         GlucoseFilter test = new GlucoseFilter();
         int result;
-        try {result = test.filterMain(Integer.parseInt(inputGlucose.getText().toString()));
+        try {
+            result = test.filterPolyFit(Integer.parseInt(inputGlucose.getText().toString()));
             outputGlucose.setText(Integer.toString(result));}
-        catch(NumberFormatException nfe){
+        catch(
+                NumberFormatException nfe){
             outputGlucose.setText("NFE error");
         }
 
