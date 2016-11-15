@@ -43,7 +43,7 @@
         android:id="@+id/tfPassword2" />
 
     <Button
-        android:text="Sign Up"
+        android:text="Create User"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnSignUp" />
