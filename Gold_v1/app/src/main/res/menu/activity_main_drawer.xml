@@ -21,6 +21,8 @@
             android:title="Tools" />
             -->
 
+        <item android:title="Bluetooth"
+            android:id="@+id/tab_bluetooth" />
         <!-- Arjun Code Start -->
         <item
             android:id="@+id/tab_glucose"

@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String username = getIntent().getStringExtra("Username");
+
 
         //Arjun start: Show initial fragment when app opens (MainFragment)
         MainFragment fragment = new MainFragment();
@@ -53,6 +56,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        TextView name = (TextView) header.findViewById(R.id.navName);
+        name.setText(username);
     }
 
     @Override
@@ -120,6 +126,13 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.tab_skin)
         {
             SkinFragment fragment = new SkinFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.tab_bluetooth)
+        {
+            BluetoothFragment fragment = new BluetoothFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();

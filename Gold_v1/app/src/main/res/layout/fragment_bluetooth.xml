@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.glucose.arjunwatane.gold_v1.BluetoothFragment">
+
+    <Button
+        android:text="Disconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnCT"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="22dp"
+        android:id="@+id/btnDC"
+        android:layout_marginRight="22dp"
+        android:layout_alignParentRight="true" />
+
+    <Button
+        android:text='Send "A"'
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnDC"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp"
+        android:id="@+id/btnSA" />
+
+    <Button
+        android:text="Connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="145dp"
+        android:id="@+id/btnCT"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/btnCT"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="13dp"
+        android:id="@+id/tvMsg"
+        android:layout_alignLeft="@+id/btnCT"
+        android:layout_marginLeft="12dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/btnSA"
+        android:layout_marginTop="73dp"
+        android:id="@+id/tvDev"
+        android:layout_alignLeft="@+id/btnSA" />
+</RelativeLayout>
