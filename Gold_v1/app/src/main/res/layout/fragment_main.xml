@@ -11,7 +11,7 @@
         android:padding="8dp"
         android:layout_centerVertical = "true"
         android:layout_centerHorizontal = "true"
-        android:id="@+id/textView"
+        android:id="@+id/btnTest"
         />
 
 </RelativeLayout>
