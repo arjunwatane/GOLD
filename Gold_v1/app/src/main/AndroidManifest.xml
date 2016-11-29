@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateUser" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".GlucoseLogFragment"></activity>
     </application>
 
 </manifest>

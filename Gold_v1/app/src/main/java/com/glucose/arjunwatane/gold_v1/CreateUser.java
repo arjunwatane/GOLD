@@ -1,5 +1,6 @@
 package com.glucose.arjunwatane.gold_v1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -34,8 +35,7 @@ public class CreateUser extends AppCompatActivity
                 if(!pass1.equals(pass2))
                 {
                     // popup msg
-                    Toast passToast = Toast.makeText(getApplicationContext(), "The passwords do not match.", Toast.LENGTH_SHORT);
-                    passToast.show();
+                    Toast.makeText(getApplicationContext(), "The passwords do not match.", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -43,9 +43,11 @@ public class CreateUser extends AppCompatActivity
                     User u = new User();
                     u.setName(namestr);
                     u.setPassword(pass1);
-
                     helper.insertUser(u);
-                    // clear out the edit text fields and create a popup letting the user know that the user was created.
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                    Toast.makeText(getApplicationContext(), "You have created a new user.", Toast.LENGTH_SHORT).show();
                 }
 
             }

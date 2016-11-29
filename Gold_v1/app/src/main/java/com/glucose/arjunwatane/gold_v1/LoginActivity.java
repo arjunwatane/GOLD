@@ -11,6 +11,7 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity
 {
     DatabaseHelper helper = new DatabaseHelper(this);
+    EditText tfUsername, tfPassword;
 
 
     @Override
@@ -21,25 +22,29 @@ public class LoginActivity extends AppCompatActivity
         helper.load();
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
-        Button btnSignUp = (Button) findViewById(R.id.btnSignUp); // change this to create user
+        Button btnCreateUser = (Button) findViewById(R.id.btnCreateUser); // change this to create user
+        tfUsername = (EditText)findViewById(R.id.TFusername);
+        tfPassword = (EditText)findViewById(R.id.TFpassword);
 
         btnLogin.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                EditText a = (EditText)findViewById(R.id.TFusername);
-                String str = a.getText().toString();
 
-                EditText b = (EditText)findViewById(R.id.TFpassword);
-                String pass = b.getText().toString();
+                String str = tfUsername.getText().toString();
+
+
+                String pass = tfPassword.getText().toString();
 
                 String password = helper.searchPass(str);
 
                 if(pass.equals(password))
                 {
+                    int ID = helper.searchID(str, pass);
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     i.putExtra("Username", str);
+                    i.putExtra("ID", ID);
                     startActivity(i);
                     finish();
                 }
@@ -53,11 +58,13 @@ public class LoginActivity extends AppCompatActivity
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener()
+        btnCreateUser.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                tfUsername.setText("");
+                tfPassword.setText("");
                 Intent i = new Intent(getApplicationContext(), CreateUser.class);
                 startActivity(i);
             }
