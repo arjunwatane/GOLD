@@ -21,6 +21,8 @@
             android:title="Tools" />
             -->
 
+        <item android:title="Main"
+            android:id="@+id/tab_main" />
         <item android:title="Bluetooth"
             android:id="@+id/tab_bluetooth" />
         <!-- Arjun Code Start -->
@@ -34,6 +36,8 @@
         <item
             android:id="@+id/tab_skin"
             android:title="Skin Thickness" />
+        <item android:title="Check Glucose Log"
+            android:id="@+id/tab_log" />
         <!-- Arjun Code End -->
     </group>
 

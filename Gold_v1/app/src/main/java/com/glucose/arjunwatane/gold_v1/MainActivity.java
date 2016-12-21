@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity
 {
     NavigationView navigationView = null;
     Toolbar toolbar = null;
+    String uname = null;
+    int ID ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -26,10 +28,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String username = getIntent().getStringExtra("Username");
+        uname = username;
+        ID = getIntent().getIntExtra("ID", -1);
 
 
         //Arjun start: Show initial fragment when app opens (MainFragment)
-        MainFragment fragment = new MainFragment();
+        MainFragment fragment = MainFragment.newInstance(uname,ID);
         android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
@@ -113,9 +117,6 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
-
-
-
         }
         else if (id == R.id.tab_oxygen)
         {
@@ -123,7 +124,8 @@ public class MainActivity extends AppCompatActivity
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
-        } else if (id == R.id.tab_skin)
+        }
+        else if (id == R.id.tab_skin)
         {
             SkinFragment fragment = new SkinFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -133,6 +135,20 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.tab_bluetooth)
         {
             BluetoothFragment fragment = new BluetoothFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.tab_log)
+        {
+            GlucoseLogFragment fragment = GlucoseLogFragment.newInstance(uname,ID);
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
+        }
+        else if (id == R.id.tab_main)
+        {
+            MainFragment fragment = MainFragment.newInstance(uname,ID);
             android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
