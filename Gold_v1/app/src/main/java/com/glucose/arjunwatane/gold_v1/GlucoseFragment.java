@@ -27,10 +27,12 @@ public class GlucoseFragment extends Fragment
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private float mParam3 [] ;
 
 
     public GlucoseFragment()
@@ -47,12 +49,14 @@ public class GlucoseFragment extends Fragment
      * @return A new instance of fragment GlucoseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static GlucoseFragment newInstance(String param1, String param2)
+    public static GlucoseFragment newInstance(String param1, String param2, float spectrum_data[])
     {
         GlucoseFragment fragment = new GlucoseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        args.putFloatArray(ARG_PARAM3, spectrum_data);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,6 +69,7 @@ public class GlucoseFragment extends Fragment
         {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam3 = getArguments().getFloatArray(ARG_PARAM3);
         }
     }
 
@@ -100,12 +105,15 @@ public class GlucoseFragment extends Fragment
     public void filter()
     {
         GlucoseFilter test = new GlucoseFilter();
-        int result;
+        float result;
+        //float spectrum_data[] = data_array;
         try {
-            result = test.filterPolyFit(Integer.parseInt(inputGlucose.getText().toString()));
-            outputGlucose.setText(Integer.toString(result));}
-        catch(
-                NumberFormatException nfe){
+            //result = test.filterPolyFit(Integer.parseInt(inputGlucose.getText().toString()));
+            test.filterPolyFit(mParam3);
+
+            //outputGlucose.setText(Integer.toString(mP));
+            }
+        catch(NumberFormatException nfe){
             outputGlucose.setText("NFE error");
         }
 

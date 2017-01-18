@@ -50,6 +50,11 @@ public class BluetoothFragment extends Fragment {
     // ListView lvDeviceList;
     TextView tvMsg, tvDev;
 
+    //Arjun
+    public float data_array[] = new float[1000];
+    public int data_cnt = 0;
+
+
     private static final UUID MY_UUID =
             UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -90,9 +95,14 @@ public class BluetoothFragment extends Fragment {
             {
                 if(msg.what == MESSAGE_READ)
                 {
-                    String readMessage = msg.obj.toString();
-                    tvMsg.setText(readMessage);
+
+                    float readMessage = (float)msg.obj;
+                    tvMsg.setText(Float.toString(readMessage));
                     tvMsg.refreshDrawableState();
+
+                    data_array[data_cnt] = readMessage;
+                    data_cnt = data_cnt + 1;
+
                 }
             }
         };
@@ -330,7 +340,7 @@ public class BluetoothFragment extends Fragment {
                         Log.d("After buffer read;", new String(buffer));
                         // Wrap the byte array as a float number ordering the bytes using little endian.
                         float test = ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).getFloat();
-                        String s = Float.toString(test);
+                        float s = test;
 
                         // Send the obtained bytes to the UI activity
                         mHandler.obtainMessage(MESSAGE_READ, bytes, -1, s).sendToTarget();

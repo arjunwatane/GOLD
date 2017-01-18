@@ -2,10 +2,10 @@ package com.glucose.arjunwatane.gold_v1;
 
 public class Derive {
     static final int rows=100, cols=500;
-    double[][] data;
+    double[] data;
 
     //test constructor
-    Derive(){
+  /*  Derive(){
         //example raw wavelength
         double[][] wave1 = new double[rows][cols];
 
@@ -26,6 +26,12 @@ public class Derive {
     Derive(double[][] spectrum){
         spectrum = derivative(spectrum);
         data = spectrum;
+    }*/
+
+    Derive(double[] spectrum){
+        spectrum = derivative(spectrum);
+        //double[] data;
+        data = spectrum;
     }
 
     //take first derivative
@@ -38,8 +44,21 @@ public class Derive {
         return spectrum;//return derived spectrum
     }
 
+
+    double[] derivative(double[] spectrum){
+        for(int i=0; i<spectrum.length; i++){
+                spectrum[i] *= (double) i+1;
+
+        }
+        return spectrum;//return derived spectrum
+    }
+
     //return derived matrix
-    public double[][] getData(){
+   /* public double[][] getData(){
+        return data;
+    }*/
+    public double[] getData(){
         return data;
     }
+
 }
