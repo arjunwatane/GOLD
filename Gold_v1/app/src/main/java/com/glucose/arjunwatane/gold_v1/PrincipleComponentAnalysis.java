@@ -149,6 +149,9 @@ public class PrincipleComponentAnalysis
 
         // strip off unneeded components and find the basis
         V_t.reshape(numComponents,mean.length,true);
+
+       // System.out.println("\n " + V_t);
+
     }
 
     /**

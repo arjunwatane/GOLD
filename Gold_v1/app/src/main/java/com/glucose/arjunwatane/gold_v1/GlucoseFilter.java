@@ -16,47 +16,68 @@ public class GlucoseFilter
 
 
 
-    public int filterPolyFit(int spectrum)
+    public void filterPolyFit(float spectrum[])
 
     {
-        double coef[] = new double[]{1,-2,3};
+        /*TODO:
+            1) Receive data of glucose
+            2) Receive data of skin
+            3) Receive data of pulse oximetry
+                3A) Calculate heart rate from this (usingk peaks/time)
+        */
 
-        double x[] = new double[]{-2,1,0.5,2,3,4,5,7,8,9.2,10.2,4.3,6.7};
-        double y[] = new double[ x.length ];
-
-        for( int i = 0; i < y.length; i++ ) {
-            double v = 0;
-            double xx = 1;
-            for (double c : coef) {
-                v += c * xx;
-                xx *= x[i];
-            }
-
-            y[i] = v;
+        //Data setup
+        double x_index[] = new double[200];
+        double spec_double[] = new double[200];
+        for(int i=0; i<spec_double.length; i++) {
+            x_index[i] = (double)i;
+            spec_double[i] = (double)spectrum[i];
         }
 
+
+        //Polynomial Fit
+        PolynomialFit polyfit = new PolynomialFit(3);
+        polyfit.fit(x_index,spec_double); //TODO: update poly fit method
+        polyfit.removeWorstFit();
+        double spec_coefficients[] = polyfit.getCoef();
+        Log.d("GlucoseFilter:", Arrays.toString(spec_coefficients));
+
+
+        //PCA
+        PrincipleComponentAnalysis alg2 = new PrincipleComponentAnalysis();
+        alg2.setup(100, 200);   // alg2.setup(#samples, #data-points per sample)
+        for(int i = 1; i<=100; i ++)
+            alg2.addSample(spec_double);    //Add sample sto the PCA object
+        System.out.println("added samples");
+        alg2.computeBasis(5);   //  Compute PCA alg2.computeBasis(#number of components)
+/*
         //generic derivative
-        Derive derive = new Derive();
+        Derive derived_data = new Derive(spec_double);
 
         //derived
-        double[][] result = derive.getData();
+       // double[][] result = derive.getData();
+       // double[] derived_result = derived_data.getData();
 
+       Deriv derivation = new Deriv();
+       double[] result =  derivation.firstOrderDerivative(1.0, spec_double, 2);
+
+        Log.d("Derived Result: ", Arrays.toString(result));
         //calculate moving average of derived data
         MovingAverage av = new MovingAverage(result);
 
-        //drived and averaged
-        result = av.getAvg();
+        //derived and averaged
+        double [] result_averaged = av.getAvg();
+        Log.d("Averaged Result: ", Arrays.toString(result_averaged));
+        Log.d("Length of ave arr: ", Integer.toString(result_averaged.length));
 
-        PolynomialFit alg = new PolynomialFit(4);
-        //PrincipleComponentAnalysis alg2 = new PrincipleComponentAnalysis();
+*/
 
-        alg.fit(x,y);
 
-        double found[] = alg.getCoef();
+        //for( int i = 0; i < coef.length; i++ )
+        //    assertEquals(coef[i], found[i], 1e-8);
 
-        for( int i = 0; i < coef.length; i++ ) assertEquals(coef[i], found[i], 1e-8);
 
-        Log.d("GlucoseFilter:", Arrays.toString(coef) + Arrays.toString(found));
-        return spectrum;
+
+        //return spectrum;
     }
 }
