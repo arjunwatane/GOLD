@@ -10,30 +10,105 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/inputGlucose"
-        android:layout_above="@+id/button_glucose"
         android:layout_centerHorizontal="true"
-        android:text="" />
+        android:layout_centerVertical="true"
+        android:layout_above="@+id/button_sample_glucose"
+        android:text="Enter known glucose value" />
 
+
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Sample"
+    android:padding="8dp"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal = "true"
+    android:id="@+id/button_sample_glucose"
+    android:layout_above="@+id/button_filter_glucose"
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Glucose"
+        android:text="Filter"
         android:padding="8dp"
-        android:layout_centerVertical = "true"
+        android:layout_above="@+id/button_polyfit_glucose"
         android:layout_centerHorizontal = "true"
-        android:id="@+id/button_glucose"
+        android:layout_centerVertical="true"
+        android:id="@+id/button_filter_glucose"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Train PolyFit"
+        android:padding="8dp"
+        android:layout_above="@+id/button_PCA_glucose"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal = "true"
+        android:id="@+id/button_polyfit_glucose"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Train PCA"
+        android:padding="8dp"
+        android:layout_centerHorizontal = "true"
+        android:layout_centerVertical="true"
+        android:id="@+id/button_PCA_glucose"
+        android:layout_above="@+id/button_test_glucose"
+        />
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="test sample"
+      android:padding="8dp"
+      android:layout_above="@+id/button_testpolyfit_glucose"
+      android:layout_centerVertical="true"
+      android:layout_centerHorizontal = "true"
+      android:id="@+id/button_test_glucose"
+
+      />
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="test polyfit"
+      android:padding="8dp"
+      android:layout_centerHorizontal = "true"
+      android:layout_centerVertical="true"
+      android:id="@+id/button_testpolyfit_glucose"
+      android:layout_above="@+id/button_testpca_glucose"
+
+      />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test pca"
+        android:padding="8dp"
+        android:id="@+id/button_testpca_glucose"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/button_PCA_glucose"
+        android:layout_alignStart="@+id/button_PCA_glucose"
+        android:layout_above="@+id/text_result_glucose"
+        android:layout_marginBottom="100dp"
+
         />
 
     <TextView
+        android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
-        android:id="@+id/outputGlucose"
-        android:layout_below="@+id/button_glucose"
-        android:layout_centerHorizontal="true"
-        android:text="result" />
+        android:layout_alignParentBottom="true"
+        android:id="@+id/text_result_glucose"
+        android:layout_marginLeft="12dp"
+        android:layout_marginBottom="50dp"
+        android:layout_alignLeft="@+id/button_PCA_glucose"
+        android:layout_alignStart="@+id/button_PCA_glucose"
+        />
 
 
 </RelativeLayout>

@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static java.lang.Math.pow;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link GlucoseFragment#newInstance} factory method to
@@ -18,10 +20,19 @@ import android.widget.Toast;
  */
 public class GlucoseFragment extends Fragment
 {
-    Button b;
+    Button b_sample, b_train, b_polyfit, b_PCA, b_test, b_testpolyfit, b_testpca;
     EditText inputGlucose;
     TextView outputGlucose;
     String stringGlucose;
+    //public double glucose_database[][] = new double[50][100];
+    public double data_filtered[][] = new double[50][100];
+    PrincipleComponentAnalysis data_PCA = new PrincipleComponentAnalysis();
+    public double data_polyfit_coef[];
+    public int size = 0;
+    public double test_filtered[], coefficients[], train_actual_values[] = new double[50];
+    public double train_results[][];
+    public double glucose_database[][] = new double[10][197];
+    public int numComponents = 5;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,43 +91,175 @@ public class GlucoseFragment extends Fragment
     {
 
         View rootView = inflater.inflate(R.layout.fragment_glucose, container, false);
-        b = (Button) rootView.findViewById(R.id.button_glucose);
+        b_sample = (Button) rootView.findViewById(R.id.button_sample_glucose);
+        b_train = (Button) rootView.findViewById(R.id.button_filter_glucose);
+        b_polyfit = (Button) rootView.findViewById(R.id.button_polyfit_glucose);
+        b_PCA = (Button) rootView.findViewById(R.id.button_PCA_glucose);
+        b_test = (Button) rootView.findViewById(R.id.button_test_glucose);
+        b_testpolyfit = (Button) rootView.findViewById(R.id.button_testpolyfit_glucose);
+        b_testpca = (Button) rootView.findViewById(R.id.button_testpca_glucose);
         inputGlucose = (EditText) rootView.findViewById(R.id.inputGlucose);
-        outputGlucose = (TextView) rootView.findViewById(R.id.outputGlucose);
 
 
-        View.OnClickListener listener = new View.OnClickListener()
+        b_sample.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                sample(inputGlucose.getText().toString());
+            }
+        });
+
+        b_train.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                train_setup();
+            }
+        });
+
+        b_polyfit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                train_polyfit();
+            }
+        });
+
+        b_PCA.setOnClickListener(new View.OnClickListener()
         {
-            /*
-                Call the filter() method, which creates a new GlucoseFilter object (GlucoseFilter.java)
-                That should be where the calculations and algorithms are run for PRE-PROCESSING RAW SPECTRA
-             */
             @Override
             public void onClick(View v)
             {
-                filter();
+                train_PCA();
             }
-        };
-        b.setOnClickListener(listener);
+        });
+
+        b_test.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                test_data();
+            }
+        });
+
+        b_testpolyfit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                test_polyfit();
+            }
+        });
+
+        b_testpca.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                test_PCA();
+            }
+        });
+
+
         return rootView;
     }
 
+    /** Get one sample data from the hardware module, and add it to the database **/
+    public void sample(String known_glucose_string){
 
-    public void filter()
-    {
-        GlucoseFilter test = new GlucoseFilter();
-        float result;
-        //float spectrum_data[] = data_array;
-        try {
-            //result = test.filterPolyFit(Integer.parseInt(inputGlucose.getText().toString()));
-            test.filterPolyFit(mParam3);
+        double known_glucose = Double.parseDouble(known_glucose_string);
+        //float data[] = BluetoothFragment.glucose_array;
+        float data[] = mParam3;
+        double spec_double[] = new double[data.length];
+        for(int i=0; i<spec_double.length; i++) {
+            spec_double[i] = (double)data[i];
+        }
+        train_actual_values[size] = known_glucose;
+        glucose_database[size] = spec_double;
+        size++;
+        System.out.println(size);
+        //return glucose_database;
+    }
 
-            //outputGlucose.setText(Integer.toString(mP));
-            }
-        catch(NumberFormatException nfe){
-            outputGlucose.setText("NFE error");
+    /** TRAIN DATA and return derived + smoothed database **/
+    public void train_setup() {
+
+        GlucoseFilter train = new GlucoseFilter();
+        train_results = glucose_database;
+
+        //1st derivative
+        train_results = train.firstDerivative(train_results);
+
+        //smooth data
+        train_results = train.smooth(train_results);
+
+        //return train_results;
+        System.out.println(train_results.length + " x " + train_results[0].length);
+
+    }
+
+    /** Create polynomial fitting of training data **/
+    public void train_polyfit(){
+        GlucoseFilter train = new GlucoseFilter();
+
+        coefficients = train.polynomialFit(train_results, train_actual_values);
+        //return coefficients;
+    }
+
+    /** Principle Component Analysis of training data **/
+    public void train_PCA(){
+        GlucoseFilter train = new GlucoseFilter();
+        data_PCA = new PrincipleComponentAnalysis();
+
+        data_PCA.setup(train_results.length, train_results[0].length);
+        for(int i = 0; i < train_results.length; i ++){
+            data_PCA.addSample(train_results[i]);
         }
 
+        data_PCA.computeBasis(numComponents);
+    }
+
+    /** Test data against Training Data **/
+    public void test_data(){
+
+        float data[] = BluetoothFragment.glucose_array;
+
+        double gluc_double[] = new double[data.length];
+        for(int i=0; i<gluc_double.length; i++) {
+            gluc_double[i] = (double)data[i];
+        }
+
+        GlucoseFilter test = new GlucoseFilter();
+
+        test_filtered = test.firstDerivative(gluc_double);
+        test_filtered = test.smooth(test_filtered);
+
+    }
+
+    /** Test data by applying poly fit function **/
+    public void test_polyfit(){
+        double sum = 0, average, result=0, exp;
+
+        for(int i=0; i < test_filtered.length; i++) {
+            sum += test_filtered[i];
+        }
+        average = sum / test_filtered.length;
+        exp = coefficients.length;
+
+        for(int i = 0; i < coefficients.length; i ++){
+            exp --;
+            result += coefficients[i] * pow(average,exp);
+        }
+    }
+
+    public void test_PCA(){
+        //data_PCA.errorMembership(test_filtered);
+        //data_PCA.sampleToEigenSpace(test_filtered);
+        data_PCA.response(test_filtered);
+    }
+
+
+
+
+    public void filter(){
     }
     //Arjun end:
 }

@@ -51,7 +51,7 @@ public class BluetoothFragment extends Fragment {
     TextView tvMsg, tvDev;
 
     //Arjun
-    public float data_array[] = new float[1000];
+    public static float glucose_array[] = new float[1000];
     public int data_cnt = 0;
 
 
@@ -97,10 +97,9 @@ public class BluetoothFragment extends Fragment {
                 {
 
                     float readMessage = (float)msg.obj;
-                    tvMsg.setText(Float.toString(readMessage));
-                    tvMsg.refreshDrawableState();
-
-                    data_array[data_cnt] = readMessage;
+                    // tvMsg.setText(Float.toString(readMessage));
+                    // tvMsg.refreshDrawableState();
+                    glucose_array[data_cnt] = readMessage;
                     data_cnt = data_cnt + 1;
 
                 }
