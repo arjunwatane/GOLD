@@ -10,6 +10,7 @@ import net.sqlcipher.Cursor;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -24,6 +25,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
 {
     private static final int SCHEMA = 1;
     private static final String DATABASE_NAME = "users.db";
+    private static final String DB_GLUC = "dbgluc";
+    private static final String T_VALS = "tvals";
+    private static final String T_RES = "tres";
     private static final String TABLE_USERS = "users";
     private static final String TABLE_INFO = "userinfo";
     private static final String COLUMN_ID = "ID";
@@ -33,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_GLUCOSE = "glucose_reading";
     private static final String COLUMN_TIMESTAMP = "time_of_reading";
+	private static final String ARRY = "array";
     private SQLiteDatabase db;
     private Context context;
     static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -157,6 +162,60 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.close();
 
         return queryResults;
+    }
+
+    //set training values
+    public void saveTVals(double[] train_actual_values){
+        load();
+        db=this.getWritableDatabase("test");
+        ContentValues values = new ContentValues();
+
+        String query = "SELECT * FROM " + T_VALS;
+        Cursor cursor = db.rawQuery(query,null);
+        int count = cursor.getCount();
+
+        values.put(ARRY, Arrays.toString(train_actual_values));
+        db.insert(T_VALS,null,values);
+        db.close();
+    }
+
+    //get training values
+    public double[] searchTraingingVals(){
+        load();
+        db = this.getReadableDatabase("test");
+        String query = "SELECT array " +  ARRY;
+        Cursor cursor = db.rawQuery(query, new String[]{T_VALS});
+        cursor.moveToFirst();
+
+        String str = cursor.getString(0);
+
+        int row = 0, col = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '[') {
+                row++;
+            }
+        }
+        row--;
+        for (int i = 0;; i++) {
+            if (str.charAt(i) == ',') {
+                col++;
+            }
+            if (str.charAt(i) == ']') {
+                break;
+            }
+        }
+        col++;
+
+        String[][] out = new String[row][col];
+
+        str = str.replaceAll("\\[", "").replaceAll("\\]", "");
+
+        String[] s1 = str.split(", ");
+
+        double tvals[] = new double[s1.length];
+
+        for(int i=0; i<s1.length;i++) tvals[i] = Double.parseDouble(s1[i]);
+        return tvals;
     }
 
     public void insertLog(String username, int userID, int glucoseValue)

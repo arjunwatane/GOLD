@@ -1,6 +1,7 @@
 package com.glucose.arjunwatane.gold_v1;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import static java.lang.Math.pow;
  */
 public class GlucoseFragment extends Fragment
 {
+    private Context mainContext = getActivity();
+    DatabaseHelper helper;
     Button b_sample, b_train, b_polyfit, b_PCA, b_test, b_testpolyfit, b_testpca;
     EditText inputGlucose;
     TextView outputGlucose;
@@ -82,6 +85,16 @@ public class GlucoseFragment extends Fragment
             mParam2 = getArguments().getString(ARG_PARAM2);
             mParam3 = getArguments().getFloatArray(ARG_PARAM3);
         }
+
+        //set up database connection
+        helper = new DatabaseHelper(mainContext);
+        helper.load();
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+        mainContext = context;
     }
 
     //Arjun start: click glucose button to start pre-processing
@@ -172,8 +185,9 @@ public class GlucoseFragment extends Fragment
         for(int i=0; i<spec_double.length; i++) {
             spec_double[i] = (double)data[i];
         }
-        train_actual_values[size] = known_glucose;
-        glucose_database[size] = spec_double;
+        train_actual_values[size] = known_glucose;///////////////////////////////////////////////////////////////////////
+        helper.saveTVals(train_actual_values);
+        glucose_database[size] = spec_double;/////////////////////////////////////////////////////////////////////
         size++;
         System.out.println(size);
         //return glucose_database;
@@ -189,7 +203,7 @@ public class GlucoseFragment extends Fragment
         train_results = train.firstDerivative(train_results);
 
         //smooth data
-        train_results = train.smooth(train_results);
+        train_results = train.smooth(train_results);//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //return train_results;
         System.out.println(train_results.length + " x " + train_results[0].length);
